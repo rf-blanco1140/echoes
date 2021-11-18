@@ -709,18 +709,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 72949461}
     m_Modifications:
-    - target: {fileID: 3465179214863771064, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
-      propertyPath: m_Acceleration
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3465179214863771065, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 1178015343}
-    - target: {fileID: 3465179214863771065, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
-      propertyPath: _pushForce
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 3465179214863771065, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
       propertyPath: _walkPoints.Array.data[0]
       value: 

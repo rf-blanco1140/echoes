@@ -24,7 +24,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     //States
     [SerializeField] private float _sightRange;
-    private bool _playerInRange;
+    [SerializeField] private bool _playerInRange;
 
     private float _attackDelay;
 
@@ -65,7 +65,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void Patrolling()
     {
-        _agent.speed = 2f;
+        _agent.speed = _sneakSpeed;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
         
@@ -83,7 +83,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void ChasePlayer()
     {
-        _agent.speed = 13f;
+        _agent.speed = _runningSpeed;
         _agent.SetDestination(_player.position);
     }
 }
