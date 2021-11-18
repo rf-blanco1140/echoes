@@ -8,7 +8,7 @@ public class Stair : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("player"))
+        if(other.gameObject.CompareTag("Player"))
         {
             other.transform.position = exitPos.position;
         }

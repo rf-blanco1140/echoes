@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class block : MonoBehaviour
+public class Lock : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] GameObject interactUI;
-    //[SerializeField] float actRange;
+    [SerializeField] GameObject doorLock;
 
-
-    private void Start()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        interactUI = GameObject.Find("UI").transform.GetChild(0).gameObject;
+        GameObject parentUI = GameObject.Find("UI");
+        interactUI = parentUI.transform.GetChild(0).gameObject;
+        doorLock = gameObject.transform.GetChild(0).gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,13 +23,13 @@ public class block : MonoBehaviour
             interactUI.SetActive(true);
         }
     }
-
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.E) && player.GetComponent<S_PlayerMovement>()._hasKey ==true)
         {
             interactUI.SetActive(false);
-            Destroy(gameObject);
+            
+            Destroy(doorLock);
         }
     }
 
@@ -39,19 +40,4 @@ public class block : MonoBehaviour
             interactUI.SetActive(false);
         }
     }
-
-    /*private void Update()
-    {
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        if(Input.GetKeyDown(KeyCode.E) && distance<= actRange)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, actRange);
-    }*/
 }

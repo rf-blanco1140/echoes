@@ -17,6 +17,8 @@ public class S_PlayerMovement : MonoBehaviour
     [SerializeField] bool _isOutside = false;
     [SerializeField] bool _soundIsPlaying =false;
 
+    public bool _hasKey;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -28,7 +30,7 @@ public class S_PlayerMovement : MonoBehaviour
     {
         _movementVector.x = Input.GetAxis("Horizontal");
         _movementVector.z = Input.GetAxis("Vertical");
-        Vector3 _velocity = _rb.velocity;
+    
         
         if(Input.GetKeyDown(KeyCode.K))
         {
@@ -46,12 +48,6 @@ public class S_PlayerMovement : MonoBehaviour
             _isRunning = false;
         }
 
-        if(_velocity==Vector3.zero)
-        {
-            FindObjectOfType<AudioManager>().StopSound("P_FootStep");
-            FindObjectOfType<AudioManager>().StopSound("P_OutStep");
-            _soundIsPlaying = false;
-        }
     }
 
     private void FixedUpdate()
@@ -60,6 +56,12 @@ public class S_PlayerMovement : MonoBehaviour
         {
             MovePlayerCharacter();
             PlayFootStep();
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().StopSound("P_FootStep");
+            FindObjectOfType<AudioManager>().StopSound("P_OutStep");
+            _soundIsPlaying = false;
         }
     }
 
@@ -96,12 +98,12 @@ public class S_PlayerMovement : MonoBehaviour
 
     void PlayFootStep()
     {
-        if(!_isOutside && _soundIsPlaying != true)
+        if(!_isOutside && !_soundIsPlaying)
         {
             FindObjectOfType<AudioManager>().PlaySound("P_FootStep");
             _soundIsPlaying = true;
         }
-        if(_isOutside&&_soundIsPlaying != true)
+        if(_isOutside && !_soundIsPlaying)
         {
             FindObjectOfType<AudioManager>().PlaySound("P_OutStep");
             _soundIsPlaying = true;
