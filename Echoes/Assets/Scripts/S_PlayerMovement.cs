@@ -9,6 +9,7 @@ public class S_PlayerMovement : MonoBehaviour
     [SerializeField] private float _sneakSpeed;
     [SerializeField] private float _runSpeed;
     private float _movementSpeed;
+    private bool _isRunning;
 
     private Vector3 _movementVector;
     private Rigidbody _rb;
@@ -17,6 +18,7 @@ public class S_PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _movementSpeed = _walkSpeed;
+        _isRunning = false;
     }
 
     private void Update()
@@ -31,11 +33,13 @@ public class S_PlayerMovement : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.L))
         {
             SetMovementSpeed(MovementSpeed.Run);
+            _isRunning = true;
         }
         
         if(Input.GetKeyUp(KeyCode.L) || Input.GetKeyUp(KeyCode.K))
         {
             SetMovementSpeed(MovementSpeed.Walk);
+            _isRunning = false;
         }
     }
 
@@ -66,5 +70,10 @@ public class S_PlayerMovement : MonoBehaviour
                 _movementSpeed = _walkSpeed;
                 break;
         }
+    }
+
+    public bool IsRunning()
+    {
+        return _isRunning;
     }
 }

@@ -13,18 +13,20 @@ public class S_MonsterAI_Basic : MonoBehaviour
     private Vector3 _currentWalkPoint;
     private int _currentWalkPointID;
     private Vector3 _distanceToWalkPoint;
-    [SerializeField] private float _sneakSpeed;
+    [SerializeField] private float _walkSpeed;
 
     //Attacking
-    [SerializeField] private float _distanceFromPlayer;
+    [SerializeField] private float _distanceFromPlayerSight;
+    [SerializeField] private float _distanceFromPlayerHearing;
     [SerializeField] private float _distanceToPush;
     [SerializeField] private float _pushForce;
     [SerializeField] private float _timeBetweenAttacks;
     [SerializeField] private float _runningSpeed;
 
     //States
-    [SerializeField] private float _sightRange;
-    [SerializeField] private bool _playerInRange;
+    [SerializeField] private bool _playerInVisualRange;
+    [SerializeField] private bool _playerInHearinglRange;
+
 
     private float _attackDelay;
 
@@ -44,28 +46,28 @@ public class S_MonsterAI_Basic : MonoBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, _player.position);
-        _playerInRange = distance <= _distanceFromPlayer;
+        _playerInVisualRange = distance <= _distanceFromPlayerSight;
+        _playerInHearinglRange = distance <= _distanceFromPlayerHearing;
 
-        if(!_playerInRange)
-        {
-            Patrolling();
-        }
-        else
+        if((_playerInHearinglRange && _player.GetComponent<S_PlayerMovement>().IsRunning()) || (_playerInVisualRange))
         {
             if (distance > _distanceToPush)
                 ChasePlayer();
             else
-            { 
-                _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
-                _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
-                _attackDelay = _timeBetweenAttacks;
+            {
+                AttackPlayer();
             }
         }
+        else
+        {
+            Patrolling();
+        }
+       
     }
 
     private void Patrolling()
     {
-        _agent.speed = _sneakSpeed;
+        _agent.speed = _walkSpeed;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
         
@@ -85,5 +87,12 @@ public class S_MonsterAI_Basic : MonoBehaviour
     {
         _agent.speed = _runningSpeed;
         _agent.SetDestination(_player.position);
+    }
+
+    private void AttackPlayer()
+    {
+        _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
+        _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
+        _attackDelay = _timeBetweenAttacks;
     }
 }
