@@ -56,6 +56,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
             else
             { 
                 _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
+                _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
                 _attackDelay = _timeBetweenAttacks;
             }
         }
