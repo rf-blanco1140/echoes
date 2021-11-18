@@ -13,7 +13,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
     private Vector3 _currentWalkPoint;
     private int _currentWalkPointID;
     private Vector3 _distanceToWalkPoint;
-    [SerializeField] private float _sneakSpeed;
+    [SerializeField] private float _walkSpeed;
 
     //Attacking
     [SerializeField] private float _distanceFromPlayer;
@@ -65,7 +65,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void Patrolling()
     {
-        _agent.speed = _sneakSpeed;
+        _agent.speed = _walkSpeed;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
         
