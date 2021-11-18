@@ -136,11 +136,13 @@ MonoBehaviour:
   _walkPoints:
   - {fileID: 0}
   - {fileID: 0}
-  _walkSpeed: 2
-  _distanceFromPlayer: 7
+  _walkSpeed: 1
+  _distanceFromPlayerSight: 7
+  _distanceFromPlayerHearing: 20
   _distanceToPush: 3
   _pushForce: 1000
   _timeBetweenAttacks: 5
-  _runningSpeed: 14
+  _runningSpeed: 13
   _sightRange: 0
-  _playerInRange: 0
+  _playerInVisualRange: 0
+  _playerInHearinglRange: 0
