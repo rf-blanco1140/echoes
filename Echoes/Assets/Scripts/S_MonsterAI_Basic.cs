@@ -16,12 +16,16 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     //Attacking
     [SerializeField] private float _distanceFromPlayer;
+    [SerializeField] private float _distanceToPush;
+    [SerializeField] private float _pushForce;
     [SerializeField] private float _timeBetweenAttacks;
     private bool _alreadyAtatcked;
 
     //States
     [SerializeField] private float _sightRange;
     private bool _playerInRange;
+
+    private float _attackDelay;
 
     private void Awake()
     {
@@ -32,6 +36,12 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void Update()
     {
+        if (_attackDelay > 0)
+        {
+            _attackDelay -= Time.deltaTime;
+            return;
+        }
+
         float distance = Vector3.Distance(transform.position, _player.position);
         _playerInRange = distance <= _distanceFromPlayer;
 
@@ -41,7 +51,13 @@ public class S_MonsterAI_Basic : MonoBehaviour
         }
         else
         {
-            AttackPlayer();
+            if (distance > _distanceToPush)
+                ChasePlayer();
+            else
+            { 
+                _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
+                _attackDelay = _timeBetweenAttacks;
+            }
         }
     }
 
@@ -62,7 +78,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
         _currentWalkPoint = _walkPoints[_currentWalkPointID].position;
     }
 
-    private void AttackPlayer()
+    private void ChasePlayer()
     {
         _agent.SetDestination(_player.position);
     }

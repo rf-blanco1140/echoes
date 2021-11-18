@@ -714,6 +714,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1178015343}
     - target: {fileID: 3465179214863771065, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
+      propertyPath: _pushForce
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3465179214863771065, guid: 2d3da844edcfed745a8280635b408ef4, type: 3}
       propertyPath: _walkPoints.Array.data[0]
       value: 
       objectReference: {fileID: 876560663}
