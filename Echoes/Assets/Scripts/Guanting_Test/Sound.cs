@@ -14,6 +14,7 @@ public class Sound {
     public float pitch;
     public bool spatialize;
     [Range(0, 1)] public float spatialBlend;
+    public bool loop;
 
     [HideInInspector]
     public AudioSource source;
