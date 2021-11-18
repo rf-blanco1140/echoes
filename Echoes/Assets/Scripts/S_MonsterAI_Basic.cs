@@ -13,13 +13,14 @@ public class S_MonsterAI_Basic : MonoBehaviour
     private Vector3 _currentWalkPoint;
     private int _currentWalkPointID;
     private Vector3 _distanceToWalkPoint;
+    [SerializeField] private float _sneakSpeed;
 
     //Attacking
     [SerializeField] private float _distanceFromPlayer;
     [SerializeField] private float _distanceToPush;
     [SerializeField] private float _pushForce;
     [SerializeField] private float _timeBetweenAttacks;
-    private bool _alreadyAtatcked;
+    [SerializeField] private float _runningSpeed;
 
     //States
     [SerializeField] private float _sightRange;
@@ -64,6 +65,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void Patrolling()
     {
+        _agent.speed = 2f;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
         
@@ -81,6 +83,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void ChasePlayer()
     {
+        _agent.speed = 13f;
         _agent.SetDestination(_player.position);
     }
 }
