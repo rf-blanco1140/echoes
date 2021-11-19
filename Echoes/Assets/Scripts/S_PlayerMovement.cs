@@ -9,7 +9,7 @@ public class S_PlayerMovement : MonoBehaviour
     [SerializeField] private float _sneakSpeed;
     [SerializeField] private float _runSpeed;
     private float _movementSpeed;
-    private bool _isRunning;
+    [SerializeField] private bool _isRunning;
 
     private Vector3 _movementVector;
     private Rigidbody _rb;
@@ -35,17 +35,18 @@ public class S_PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K))
         {
             SetMovementSpeed(MovementSpeed.Sneak);
+            _isRunning = false;
         }
-        else if(Input.GetKeyDown(KeyCode.L))
+       /*else if(Input.GetKeyDown(KeyCode.L))
         {
             SetMovementSpeed(MovementSpeed.Run);
             _isRunning = true;
-        }
+        }*/
         
         if(Input.GetKeyUp(KeyCode.L) || Input.GetKeyUp(KeyCode.K))
         {
             SetMovementSpeed(MovementSpeed.Walk);
-            _isRunning = false;
+            //_isRunning = true;
         }
 
     }
@@ -54,6 +55,14 @@ public class S_PlayerMovement : MonoBehaviour
     {
         if(_movementVector.x != 0 || _movementVector.z != 0)
         {
+            if(_movementSpeed != _sneakSpeed)
+            {
+                _isRunning = true;
+            }
+            else
+            {
+                _isRunning = false;
+            }
             MovePlayerCharacter();
             PlayFootStep();
         }
@@ -62,6 +71,7 @@ public class S_PlayerMovement : MonoBehaviour
             FindObjectOfType<AudioManager>().StopSound("P_FootStep");
             FindObjectOfType<AudioManager>().StopSound("P_OutStep");
             _soundIsPlaying = false;
+            _isRunning = false;
         }
     }
 
