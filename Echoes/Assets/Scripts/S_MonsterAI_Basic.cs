@@ -95,4 +95,9 @@ public class S_MonsterAI_Basic : MonoBehaviour
         _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
         _attackDelay = _timeBetweenAttacks;
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, _distanceFromPlayerSight);
+    }
 }
