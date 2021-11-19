@@ -38,4 +38,9 @@ public class AudioManager : MonoBehaviour
             return;
         s.source.Stop();
     }
+
+    private void Start()
+    {
+        PlaySound("Theme");
+    }
 }
