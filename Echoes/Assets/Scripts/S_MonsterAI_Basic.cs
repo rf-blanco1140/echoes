@@ -27,6 +27,14 @@ public class S_MonsterAI_Basic : MonoBehaviour
     [SerializeField] private bool _playerInVisualRange;
     [SerializeField] private bool _playerInHearinglRange;
 
+    //Audio
+    enum AudioState { Walk,Chase,Attack };
+    [SerializeField] AudioClip _walkSFX;
+    [SerializeField] AudioClip _chaseSFX;
+    [SerializeField] AudioClip _attackSFX;
+    AudioSource _audioSource;
+    AudioClip _audioClip;
+
 
     private float _attackDelay;
 
@@ -35,6 +43,8 @@ public class S_MonsterAI_Basic : MonoBehaviour
         _player = GameObject.Find("Player").transform;
         _currentWalkPoint = _walkPoints[0].position;
         _agent = GetComponent<NavMeshAgent>();
+        _audioSource = GetComponentInChildren<AudioSource>();
+
     }
 
     private void Update()
@@ -67,6 +77,8 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void Patrolling()
     {
+        
+        SetAudioClip(AudioState.Walk);
         _agent.speed = _walkSpeed;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
@@ -85,14 +97,50 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void ChasePlayer()
     {
+        SetAudioClip(AudioState.Chase);
         _agent.speed = _runningSpeed;
         _agent.SetDestination(_player.position);
     }
 
     private void AttackPlayer()
     {
+        SetAudioClip(AudioState.Attack);
         _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
         _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
         _attackDelay = _timeBetweenAttacks;
+    }
+
+    private void SetAudioClip(AudioState audioClip)
+    {
+        switch (audioClip)
+        {
+            case AudioState.Walk:
+                if(_audioClip!=_walkSFX)
+                {
+                    _audioSource.Stop();
+                    _audioClip = _walkSFX;
+                    _audioSource.clip = _audioClip;
+                    _audioSource.Play();
+                }                
+                break;
+            case AudioState.Chase:
+                if (_audioClip != _chaseSFX)
+                {
+                    _audioSource.Stop();
+                    _audioClip = _chaseSFX;
+                    _audioSource.clip = _audioClip;
+                    _audioSource.Play();
+                }
+                break;
+            case AudioState.Attack:
+                if (_audioClip != _attackSFX)
+                {
+                    _audioSource.Stop();
+                    _audioClip = _attackSFX; 
+                    _audioSource.clip = _audioClip;
+                    _audioSource.Play();
+                }
+                break;
+        }
     }
 }

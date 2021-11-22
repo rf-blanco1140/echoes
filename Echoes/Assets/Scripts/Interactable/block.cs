@@ -7,12 +7,14 @@ public class block : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject interactUI;
     //[SerializeField] float actRange;
+    AudioManager audioManager;
 
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         interactUI = GameObject.Find("UI").transform.GetChild(0).gameObject;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +29,7 @@ public class block : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
         {
+            audioManager.PlaySound("StoneOpen");
             interactUI.SetActive(false);
             Destroy(gameObject);
         }
