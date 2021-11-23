@@ -143,4 +143,10 @@ public class S_MonsterAI_Basic : MonoBehaviour
                 break;
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position,_distanceFromPlayerSight);
+    }
 }
