@@ -28,12 +28,12 @@ public class S_MonsterAI_Basic : MonoBehaviour
     [SerializeField] private bool _playerInHearinglRange;
 
     //Audio
-    /*enum AudioState { Walk,Chase,Attack };
+    enum AudioState { Walk,Chase,Attack };
     [SerializeField] AudioClip _walkSFX;
     [SerializeField] AudioClip _chaseSFX;
     [SerializeField] AudioClip _attackSFX;
     AudioSource _audioSource;
-    AudioClip _audioClip;*/
+    AudioClip _audioClip;
 
 
     private float _attackDelay;
@@ -43,7 +43,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
         _player = GameObject.Find("Player").transform;
         _currentWalkPoint = _walkPoints[0].position;
         _agent = GetComponent<NavMeshAgent>();
-        //_audioSource = GetComponentInChildren<AudioSource>();
+        _audioSource = GetComponentInChildren<AudioSource>();
 
     }
 
@@ -78,7 +78,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
     private void Patrolling()
     {
         
-        //SetAudioClip(AudioState.Walk);
+        SetAudioClip(AudioState.Walk);
         _agent.speed = _walkSpeed;
         _agent.SetDestination(_currentWalkPoint);
         _distanceToWalkPoint = transform.position - _currentWalkPoint;
@@ -97,20 +97,20 @@ public class S_MonsterAI_Basic : MonoBehaviour
 
     private void ChasePlayer()
     {
-        //SetAudioClip(AudioState.Chase);
+        SetAudioClip(AudioState.Chase);
         _agent.speed = _runningSpeed;
         _agent.SetDestination(_player.position);
     }
 
     private void AttackPlayer()
     {
-        //SetAudioClip(AudioState.Attack);
+        SetAudioClip(AudioState.Attack);
         _player.GetComponent<Rigidbody>().AddForce((_player.position - transform.position).normalized * _pushForce);
         _player.GetComponent<S_HpPlayer>().HurtPlayerCharacter();
         _attackDelay = _timeBetweenAttacks;
     }
 
-    /*private void SetAudioClip(AudioState audioClip)
+    private void SetAudioClip(AudioState audioClip)
     {
         switch (audioClip)
         {
@@ -142,5 +142,5 @@ public class S_MonsterAI_Basic : MonoBehaviour
                 }
                 break;
         }
-    }*/
+    }
 }
