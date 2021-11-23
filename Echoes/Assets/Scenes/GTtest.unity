@@ -245,13 +245,13 @@ AudioSource:
   Loop: 1
   Mute: 0
   Spatialize: 1
-  SpatializePostEffects: 0
+  SpatializePostEffects: 1
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 4
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -259,23 +259,32 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.4
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.5009959
+      outSlope: -2.5009959
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.8
+      value: 0.5
+      inSlope: -0.62524897
+      outSlope: -0.62524897
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.94610596
+      value: 0.015661627
+      inSlope: -0.4001595
+      outSlope: -0.4001595
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -394,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805970495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.46, y: 1, z: -9.01}
+  m_LocalPosition: {x: -1.46, y: -0.12, z: -8.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -417,13 +426,13 @@ MonoBehaviour:
   distanceAttenuation: 1
   distanceAttenuationInput: 0
   distanceAttenuationValue: 1
-  airAbsorption: 1
+  airAbsorption: 0
   airAbsorptionInput: 0
   airAbsorptionLow: 1
   airAbsorptionMid: 1
   airAbsorptionHigh: 1
-  directivity: 0
-  directivityInput: 0
+  directivity: 1
+  directivityInput: 1
   dipoleWeight: 0
   dipolePower: 0
   directivityValue: 1
