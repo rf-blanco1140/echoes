@@ -59,7 +59,7 @@ public class S_MonsterAI_Basic : MonoBehaviour
         _playerInVisualRange = distance <= _distanceFromPlayerSight;
         _playerInHearinglRange = distance <= _distanceFromPlayerHearing;
 
-        if((_playerInHearinglRange && _player.GetComponent<S_PlayerMovement>().IsRunning()) || (_playerInVisualRange))
+        if((_playerInHearinglRange && _player.GetComponent<S_PlayerMovement>().IsRunning()) || (_playerInVisualRange)&&!_player.GetComponent<S_PlayerMovement>().IsSneaking())
         {
             if (distance > _distanceToPush)
                 ChasePlayer();

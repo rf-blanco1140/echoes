@@ -17,6 +17,10 @@ public class S_PlayerMovement : MonoBehaviour
     [SerializeField] bool _isOutside = false;
     [SerializeField] bool _soundIsPlaying =false;
 
+    //modified
+    [SerializeField] bool _isSneaking;
+
+
     public bool _hasKey;
 
     private void Start()
@@ -24,6 +28,7 @@ public class S_PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _movementSpeed = _walkSpeed;
         _isRunning = false;
+        _isSneaking = false;
     }
 
     private void Update()
@@ -35,6 +40,7 @@ public class S_PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K))
         {
             SetMovementSpeed(MovementSpeed.Sneak);
+            _isSneaking = true;
         }
         else if(Input.GetKeyDown(KeyCode.L))
         {
@@ -42,10 +48,17 @@ public class S_PlayerMovement : MonoBehaviour
             _isRunning = true;
         }
         
-        if(Input.GetKeyUp(KeyCode.L) || Input.GetKeyUp(KeyCode.K))
+        if(Input.GetKeyUp(KeyCode.L) /*|| Input.GetKeyUp(KeyCode.K)*/)
+        {
+              SetMovementSpeed(MovementSpeed.Walk);
+
+            _isRunning = false;
+        }
+        else if(Input.GetKeyUp(KeyCode.K))
         {
             SetMovementSpeed(MovementSpeed.Walk);
-            _isRunning = false;
+
+            _isSneaking = false;
         }
 
     }
@@ -91,21 +104,16 @@ public class S_PlayerMovement : MonoBehaviour
         return _isRunning;
     }
 
-    public bool IsOutside()
+    public bool IsSneaking()
     {
-        return _isOutside;
+        return _isSneaking;
     }
 
     void PlayFootStep()
     {
-        if(!_isOutside && !_soundIsPlaying)
+        if(_movementSpeed!=_sneakSpeed && !_soundIsPlaying)
         {
             FindObjectOfType<AudioManager>().PlaySound("P_FootStep");
-            _soundIsPlaying = true;
-        }
-        if(_isOutside && !_soundIsPlaying)
-        {
-            FindObjectOfType<AudioManager>().PlaySound("P_OutStep");
             _soundIsPlaying = true;
         }
     }
